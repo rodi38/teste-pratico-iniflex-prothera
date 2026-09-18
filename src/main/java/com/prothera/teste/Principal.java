@@ -53,6 +53,9 @@ public class Principal {
         Map<String, List<Funcionario>> funcionariosPorFuncao = funcionarios.stream()
                 .collect(Collectors.groupingBy(Funcionario::getFuncao));
 
+        imprimirTitulo("Lista de funcionários com salário reajustado");
+        imprimirFuncionarios(funcionarios);
+
         imprimirTitulo("3.6 - Funcionários agrupados por função");
         imprimirFuncionariosPorFuncao(funcionariosPorFuncao);
 
