@@ -1,12 +1,17 @@
 package com.prothera.teste;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Principal {
 
@@ -35,8 +40,34 @@ public class Principal {
 
         funcionarios.removeIf(funcionario -> funcionario.getNome().equals("João"));
 
-        // 3.3 - Imprimir todos os funcionários com todas suas informações.
         imprimirFuncionarios(funcionarios);
+
+        aplicarAumento(funcionarios, new BigDecimal("0.10"));
+
+        Map<String, List<Funcionario>> funcionariosPorFuncao = funcionarios.stream()
+                .collect(Collectors.groupingBy(Funcionario::getFuncao));
+
+        imprimirFuncionariosPorFuncao(funcionariosPorFuncao);
+
+        System.out.println("\nAniversariantes de outubro e dezembro:");
+        funcionarios.stream()
+                .filter(funcionario -> {
+                    int mes = funcionario.getDataNascimento().getMonthValue();
+                    return mes == 10 || mes == 12;
+                })
+                .forEach(funcionario -> System.out.println(funcionario.getNome()));
+
+        Funcionario maisVelho = funcionarios.stream()
+                .min(Comparator.comparing(Funcionario::getDataNascimento))
+                .orElseThrow();
+        int idade = Period.between(maisVelho.getDataNascimento(), LocalDate.now()).getYears();
+        System.out.println("\nFuncionário com maior idade: " + maisVelho.getNome() + " - " + idade + " anos");
+    }
+
+    private static void aplicarAumento(List<Funcionario> funcionarios, BigDecimal percentual) {
+        BigDecimal multiplicador = BigDecimal.ONE.add(percentual);
+        funcionarios.forEach(funcionario ->
+                funcionario.setSalario(funcionario.getSalario().multiply(multiplicador).setScale(2, RoundingMode.HALF_UP)));
     }
 
     private static void imprimirFuncionarios(List<Funcionario> funcionarios) {
@@ -45,5 +76,12 @@ public class Principal {
                         + funcionario.getDataNascimento().format(FORMATO_DATA) + " - "
                         + FORMATO_NUMERO.format(funcionario.getSalario()) + " - "
                         + funcionario.getFuncao()));
+    }
+
+    private static void imprimirFuncionariosPorFuncao(Map<String, List<Funcionario>> funcionariosPorFuncao) {
+        funcionariosPorFuncao.forEach((funcao, funcionarios) -> {
+            System.out.println("\n" + funcao + ":");
+            imprimirFuncionarios(funcionarios);
+        });
     }
 }
