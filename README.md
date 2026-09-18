@@ -1,5 +1,10 @@
 # teste-pratico-iniflex-prothera
 
+## Requisitos técnicos
+
+- Java 17 (Temurin) e Maven 3.9.9 — usados no projeto e definidos no `.sdkmanrc`.
+- Git (opcional) — usado apenas para clonar o repositório; caso não tenha, dá pra baixar o projeto como `.zip` diretamente pelo GitHub (veja o passo 1 de [Como executar](#como-executar)).
+
 ## Enunciado
 
 Considerando que uma indústria possui pessoas/funcionários, desenvolver um projeto Java com os requisitos abaixo.
@@ -44,18 +49,22 @@ Considerando que uma indústria possui pessoas/funcionários, desenvolver um pro
 - Ao finalizar, exportar o projeto e enviar o link do repositório.
 - Itens não resolvidos devem ser comentados no código informando o motivo.
 
-## Requisitos técnicos
-
-No projeto utilizei o Java 17(temurin) e o maven 3.9.9, ambos definidos no env do sdkman(.sdkmanrc).
-
 ## Como executar
 
-### 1. Clonar o repositório
+### 1. Obter o projeto
+
+**Com Git:**
 
 ```bash
 git clone https://github.com/rodi38/teste-pratico-iniflex-prothera.git
 cd teste-pratico-iniflex-prothera
 ```
+
+**Sem Git (baixando o ZIP):**
+
+1. Acesse a página do repositório: https://github.com/rodi38/teste-pratico-iniflex-prothera
+2. Clique em **Code** > **Download ZIP**.
+3. Extraia o arquivo baixado e abra um terminal dentro da pasta extraída.
 
 ### 2. Instalar o Java 17 e o Maven (caso não tenha)
 
