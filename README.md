@@ -1,7 +1,5 @@
 # teste-pratico-iniflex-prothera
 
-Teste prático de programação em Java (JDK 17).
-
 ## Enunciado
 
 Considerando que uma indústria possui pessoas/funcionários, desenvolver um projeto Java com os requisitos abaixo.
@@ -48,5 +46,60 @@ Considerando que uma indústria possui pessoas/funcionários, desenvolver um pro
 
 ## Requisitos técnicos
 
-No projeto utilizei o Java 17(sdkman a versão temurin).
+No projeto utilizei o Java 17(temurin) e o maven 3.9.9, ambos definidos no env do sdkman(.sdkmanrc).
 
+## Como executar
+
+### 1. Clonar o repositório
+
+```bash
+git clone https://github.com/rodi38/teste-pratico-iniflex-prothera.git
+cd teste-pratico-iniflex-prothera
+```
+
+### 2. Instalar o Java 17 e o Maven (caso não tenha)
+
+#### Linux / macOS (via SDKMAN!)
+
+O projeto usa [SDKMAN!](https://sdkman.io/) para gerenciar as versões do Java e do Maven.
+
+Instalar o SDKMAN!:
+
+```bash
+curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+```
+
+Instalar as versões usadas no projeto (definidas no arquivo `.sdkmanrc`):
+
+```bash
+sdk env install
+sdk env
+```
+
+Isso instala e ativa automaticamente o Java 17.0.13-tem e o Maven 3.9.9 apenas para este diretório.
+
+#### Windows
+
+O SDKMAN! não roda nativamente no Windows (apenas via WSL). Duas opções:
+
+**Opção A - WSL (Windows Subsystem for Linux):** instale o WSL, abra um terminal Ubuntu e siga as instruções de "Linux / macOS" acima dentro dele.
+
+**Opção B - instalação manual:**
+1. Baixe e instale o [JDK 17 (Temurin)](https://adoptium.net/temurin/releases/?version=17), escolhendo o instalador `.msi` para Windows.
+2. Baixe o [Maven 3.9+](https://maven.apache.org/download.cgi) (arquivo `.zip`), extraia em uma pasta (ex.: `C:\Program Files\Apache\maven`) e adicione a pasta `bin` dela na variável de ambiente `PATH`.
+3. Confirme a instalação abrindo um novo terminal (PowerShell ou CMD) e rodando:
+   ```powershell
+   java -version
+   mvn -version
+   ```
+
+### 3. Compilar e rodar
+
+Em qualquer sistema operacional, dentro da pasta do projeto:
+
+```bash
+mvn compile exec:java
+```
+
+O programa executa todos os requisitos em sequência e imprime o resultado de cada item no terminal.
