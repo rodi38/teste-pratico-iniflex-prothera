@@ -23,11 +23,11 @@ Considerando que uma indústria possui pessoas/funcionários, desenvolver um pro
 
 ## Requisitos
 
-- [ ] 1 - Classe `Pessoa` com os atributos: nome (String) e data nascimento (LocalDate).
-- [ ] 2 - Classe `Funcionario` que estenda a classe `Pessoa`, com os atributos: salário (BigDecimal) e função (String).
-- [ ] 3 - Classe `Principal` para executar as seguintes ações:
-  - [ ] 3.1 - Inserir todos os funcionários, na mesma ordem e informações da tabela acima.
-  - [ ] 3.2 - Remover o funcionário "João" da lista.
+- [X] 1 - Classe `Pessoa` com os atributos: nome (String) e data nascimento (LocalDate).
+- [X] 2 - Classe `Funcionario` que estenda a classe `Pessoa`, com os atributos: salário (BigDecimal) e função (String).
+- [X] 3 - Classe `Principal` para executar as seguintes ações:
+  - [X] 3.1 - Inserir todos os funcionários, na mesma ordem e informações da tabela acima.
+  - [X] 3.2 - Remover o funcionário "João" da lista.
   - [ ] 3.3 - Imprimir todos os funcionários com todas suas informações, sendo que:
     - [ ] informação de data deve ser exibida no formato dd/mm/aaaa;
     - [ ] informação de valor numérico deve ser exibida no formato com separador de milhar como ponto e decimal como vírgula.
