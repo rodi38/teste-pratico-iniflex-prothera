@@ -1,11 +1,24 @@
 package com.prothera.teste;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Principal {
+
+    private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final NumberFormat FORMATO_NUMERO = criarFormatoNumero();
+
+    private static NumberFormat criarFormatoNumero() {
+        NumberFormat formato = NumberFormat.getNumberInstance(new Locale("pt", "BR"));
+        formato.setMinimumFractionDigits(2);
+        formato.setMaximumFractionDigits(2);
+        return formato;
+    }
 
     public static void main(String[] args) {
         List<Funcionario> funcionarios = new ArrayList<>();
@@ -22,6 +35,15 @@ public class Principal {
 
         funcionarios.removeIf(funcionario -> funcionario.getNome().equals("João"));
 
-        funcionarios.forEach(System.out::println);
+        // 3.3 - Imprimir todos os funcionários com todas suas informações.
+        imprimirFuncionarios(funcionarios);
+    }
+
+    private static void imprimirFuncionarios(List<Funcionario> funcionarios) {
+        funcionarios.forEach(funcionario -> System.out.println(
+                funcionario.getNome() + " - "
+                        + funcionario.getDataNascimento().format(FORMATO_DATA) + " - "
+                        + FORMATO_NUMERO.format(funcionario.getSalario()) + " - "
+                        + funcionario.getFuncao()));
     }
 }
