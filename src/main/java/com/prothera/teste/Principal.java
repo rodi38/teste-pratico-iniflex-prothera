@@ -62,6 +62,24 @@ public class Principal {
                 .orElseThrow();
         int idade = Period.between(maisVelho.getDataNascimento(), LocalDate.now()).getYears();
         System.out.println("\nFuncionário com maior idade: " + maisVelho.getNome() + " - " + idade + " anos");
+
+        List<Funcionario> funcionariosOrdenados = funcionarios.stream()
+                .sorted(Comparator.comparing(Funcionario::getNome))
+                .collect(Collectors.toList());
+        System.out.println("\nFuncionários em ordem alfabética:");
+        imprimirFuncionarios(funcionariosOrdenados);
+
+        BigDecimal totalSalarios = funcionarios.stream()
+                .map(Funcionario::getSalario)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        System.out.println("\nTotal dos salários: " + FORMATO_NUMERO.format(totalSalarios));
+
+        BigDecimal salarioMinimo = new BigDecimal("1212.00");
+        System.out.println("\nSalários mínimos por funcionário:");
+        funcionarios.forEach(funcionario -> {
+            BigDecimal quantidadeSalariosMinimos = funcionario.getSalario().divide(salarioMinimo, 2, RoundingMode.HALF_UP);
+            System.out.println(funcionario.getNome() + " - " + FORMATO_NUMERO.format(quantidadeSalariosMinimos));
+        });
     }
 
     private static void aplicarAumento(List<Funcionario> funcionarios, BigDecimal percentual) {
