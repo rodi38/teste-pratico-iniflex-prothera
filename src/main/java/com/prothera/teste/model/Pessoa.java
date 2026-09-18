@@ -1,4 +1,4 @@
-package com.prothera.teste;
+package com.prothera.teste.model;
 
 import java.time.LocalDate;
 

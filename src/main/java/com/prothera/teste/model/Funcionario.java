@@ -1,4 +1,4 @@
-package com.prothera.teste;
+package com.prothera.teste.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

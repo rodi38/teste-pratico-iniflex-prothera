@@ -1,7 +1,10 @@
 package com.prothera.teste;
 
+import com.prothera.teste.model.Funcionario;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.Collator;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.Period;
@@ -15,11 +18,13 @@ import java.util.stream.Collectors;
 
 public class Principal {
 
+    private static final Locale LOCALE_PT_BR = new Locale("pt", "BR");
     private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final NumberFormat FORMATO_NUMERO = criarFormatoNumero();
+    private static final Collator COLLATOR_PT_BR = Collator.getInstance(LOCALE_PT_BR);
 
     private static NumberFormat criarFormatoNumero() {
-        NumberFormat formato = NumberFormat.getNumberInstance(new Locale("pt", "BR"));
+        NumberFormat formato = NumberFormat.getNumberInstance(LOCALE_PT_BR);
         formato.setMinimumFractionDigits(2);
         formato.setMaximumFractionDigits(2);
         return formato;
@@ -40,6 +45,7 @@ public class Principal {
 
         funcionarios.removeIf(funcionario -> funcionario.getNome().equals("João"));
 
+        imprimirTitulo("3.3 - Lista de funcionários");
         imprimirFuncionarios(funcionarios);
 
         aplicarAumento(funcionarios, new BigDecimal("0.10"));
@@ -47,9 +53,10 @@ public class Principal {
         Map<String, List<Funcionario>> funcionariosPorFuncao = funcionarios.stream()
                 .collect(Collectors.groupingBy(Funcionario::getFuncao));
 
+        imprimirTitulo("3.6 - Funcionários agrupados por função");
         imprimirFuncionariosPorFuncao(funcionariosPorFuncao);
 
-        System.out.println("\nAniversariantes de outubro e dezembro:");
+        imprimirTitulo("3.8 - Aniversariantes de outubro e dezembro");
         funcionarios.stream()
                 .filter(funcionario -> {
                     int mes = funcionario.getDataNascimento().getMonthValue();
@@ -61,21 +68,23 @@ public class Principal {
                 .min(Comparator.comparing(Funcionario::getDataNascimento))
                 .orElseThrow();
         int idade = Period.between(maisVelho.getDataNascimento(), LocalDate.now()).getYears();
-        System.out.println("\nFuncionário com maior idade: " + maisVelho.getNome() + " - " + idade + " anos");
+        imprimirTitulo("3.9 - Funcionário com maior idade");
+        System.out.println(maisVelho.getNome() + " - " + idade + " anos");
 
         List<Funcionario> funcionariosOrdenados = funcionarios.stream()
-                .sorted(Comparator.comparing(Funcionario::getNome))
+                .sorted(Comparator.comparing(Funcionario::getNome, COLLATOR_PT_BR::compare))
                 .collect(Collectors.toList());
-        System.out.println("\nFuncionários em ordem alfabética:");
+        imprimirTitulo("3.10 - Funcionários em ordem alfabética");
         imprimirFuncionarios(funcionariosOrdenados);
 
         BigDecimal totalSalarios = funcionarios.stream()
                 .map(Funcionario::getSalario)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        System.out.println("\nTotal dos salários: " + FORMATO_NUMERO.format(totalSalarios));
+        imprimirTitulo("3.11 - Total dos salários");
+        System.out.println(FORMATO_NUMERO.format(totalSalarios));
 
         BigDecimal salarioMinimo = new BigDecimal("1212.00");
-        System.out.println("\nSalários mínimos por funcionário:");
+        imprimirTitulo("3.12 - Salários mínimos por funcionário");
         funcionarios.forEach(funcionario -> {
             BigDecimal quantidadeSalariosMinimos = funcionario.getSalario().divide(salarioMinimo, 2, RoundingMode.HALF_UP);
             System.out.println(funcionario.getNome() + " - " + FORMATO_NUMERO.format(quantidadeSalariosMinimos));
@@ -86,6 +95,10 @@ public class Principal {
         BigDecimal multiplicador = BigDecimal.ONE.add(percentual);
         funcionarios.forEach(funcionario ->
                 funcionario.setSalario(funcionario.getSalario().multiply(multiplicador).setScale(2, RoundingMode.HALF_UP)));
+    }
+
+    private static void imprimirTitulo(String titulo) {
+        System.out.println("\n===== " + titulo + " =====");
     }
 
     private static void imprimirFuncionarios(List<Funcionario> funcionarios) {
